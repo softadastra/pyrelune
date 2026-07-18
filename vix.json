@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "type": "executable",
   "license": "MIT",
-  "description": "A Python execution kernel for interactive notebooks in Vix Note.",
+  "description": "A Python execution kernel for interactive notebooks in Vix Note",
   "repository": "https://github.com/softadastra/pyrelune",
   "keywords": [
     "vix",
