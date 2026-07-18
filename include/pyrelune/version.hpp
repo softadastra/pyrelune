@@ -30,12 +30,12 @@ namespace pyrelune
   /**
    * @brief Patch component of the current Pyrelune version.
    */
-  inline constexpr int version_patch = 0;
+  inline constexpr int version_patch = 1;
 
   /**
    * @brief Complete Pyrelune version string.
    */
-  inline constexpr std::string_view version = "0.1.0";
+  inline constexpr std::string_view version = "0.1.1";
 
   /**
    * @brief Vix Note extension protocol implemented by Pyrelune.

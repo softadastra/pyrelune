@@ -586,3 +586,10 @@ See [LICENSE](LICENSE) for details.
 Pyrelune is developed and maintained by Softadastra.
 
 Softadastra builds modern tooling for C++ development and native applications.
+## 0.1.1
+
+- Installs `pyrelune-runtime.py` under `<prefix>/share/pyrelune/`.
+- Resolves the real executable path when launched from `PATH`.
+- Preserves rich MIME outputs for final Python expressions.
+- Declares Python cell default source metadata for Vix Note.
+

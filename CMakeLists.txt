@@ -64,6 +64,13 @@ target_link_libraries(
     pyrelune_core
 )
 
+target_compile_definitions(
+  pyrelune
+  PRIVATE
+    PYRELUNE_SOURCE_RUNTIME_SCRIPT="${CMAKE_CURRENT_SOURCE_DIR}/scripts/pyrelune-runtime.py"
+    PYRELUNE_INSTALL_RUNTIME_SCRIPT="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/pyrelune/pyrelune-runtime.py"
+)
+
 install(
   TARGETS
     pyrelune
@@ -78,6 +85,11 @@ install(
 install(
   DIRECTORY include/
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(
+  FILES scripts/pyrelune-runtime.py
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/pyrelune
 )
 
 install(

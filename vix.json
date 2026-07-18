@@ -1,7 +1,7 @@
 {
   "name": "pyrelune",
   "namespace": "softadastra",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "executable",
   "license": "MIT",
   "description": "A Python execution kernel for interactive notebooks in Vix Note",
@@ -35,7 +35,10 @@
           "executable": true,
           "aliases": [
             "py"
-          ]
+          ],
+          "commentLine": "#",
+          "defaultSource": "# Write your explanation here.\n",
+          "placeholder": "Write your explanation here."
         }
       ],
       "capabilities": [

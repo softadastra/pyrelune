@@ -227,6 +227,114 @@ namespace pyrelune
       return parse_json_string_value(json, position);
     }
 
+    [[nodiscard]] std::vector<Output> find_json_outputs(
+        std::string_view json)
+    {
+      std::vector<Output> outputs;
+      const std::string key = "\"outputs\"";
+      std::size_t position = json.find(key);
+
+      if (position == std::string_view::npos)
+      {
+        return outputs;
+      }
+
+      position = json.find('[', position + key.size());
+
+      if (position == std::string_view::npos)
+      {
+        return outputs;
+      }
+
+      ++position;
+
+      while (position < json.size())
+      {
+        skip_whitespace(json, position);
+
+        if (position >= json.size() || json[position] == ']')
+        {
+          break;
+        }
+
+        if (json[position] != '{')
+        {
+          ++position;
+          continue;
+        }
+
+        const std::size_t object_begin = position;
+        int depth = 0;
+        bool in_string = false;
+        bool escaping = false;
+
+        while (position < json.size())
+        {
+          const char c = json[position++];
+
+          if (in_string)
+          {
+            if (escaping)
+            {
+              escaping = false;
+            }
+            else if (c == '\\')
+            {
+              escaping = true;
+            }
+            else if (c == '"')
+            {
+              in_string = false;
+            }
+            continue;
+          }
+
+          if (c == '"')
+          {
+            in_string = true;
+            continue;
+          }
+
+          if (c == '{')
+          {
+            ++depth;
+          }
+          else if (c == '}')
+          {
+            --depth;
+            if (depth == 0)
+            {
+              const std::string_view object =
+                  json.substr(object_begin, position - object_begin);
+              Output output{
+                  .mime = find_json_string(object, "mime"),
+                  .data = find_json_string(object, "data")};
+
+              if (!output.mime.empty() || !output.data.empty())
+              {
+                if (output.mime.empty())
+                {
+                  output.mime = "text/plain";
+                }
+
+                outputs.push_back(std::move(output));
+              }
+              break;
+            }
+          }
+        }
+
+        skip_whitespace(json, position);
+
+        if (position < json.size() && json[position] == ',')
+        {
+          ++position;
+        }
+      }
+
+      return outputs;
+    }
+
     [[nodiscard]] Response parse_runtime_response(
         const Request &request,
         const ProcessResult &process)
@@ -258,6 +366,10 @@ namespace pyrelune
           find_json_string(
               process.stdout_text,
               "error");
+
+      response.outputs =
+          find_json_outputs(
+              process.stdout_text);
 
       if (response.request_id.empty())
       {
