@@ -140,7 +140,8 @@ lib/
 
 share/
 └── pyrelune/
-    └── pyrelune-runtime.py
+    ├── pyrelune-runtime.py
+    └── icon.svg
 ```
 
 ## Vix Note extension
@@ -151,8 +152,10 @@ Pyrelune is declared as a standard Vix package with a Note extension:
 {
   "extensions": {
     "note": {
-      "api": "vix-note-extension-1",
+      "api": "1",
+      "icon": "assets/icon.svg",
       "runtime": {
+        "protocol": "vix-note-extension-1",
         "command": "pyrelune",
         "mode": "oneshot"
       },

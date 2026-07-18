@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 project(
   pyrelune
-  VERSION 0.1.0
+  VERSION 0.1.2
   DESCRIPTION "A Python execution kernel for interactive notebooks in Vix Note."
   HOMEPAGE_URL "https://github.com/softadastra/pyrelune"
   LANGUAGES CXX
@@ -89,6 +89,11 @@ install(
 
 install(
   FILES scripts/pyrelune-runtime.py
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/pyrelune
+)
+
+install(
+  FILES assets/icon.svg
   DESTINATION ${CMAKE_INSTALL_DATADIR}/pyrelune
 )
 
